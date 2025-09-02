@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Mic, Square, Play, Pause, Download, Waveform, Sparkles, Volume2 } from 'lucide-react';
+import { Mic, Square, Play, Pause, Download, AudioWaveform as Waveform, Sparkles, Volume2 } from 'lucide-react';
 
 const RemixLab: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
