@@ -1,7 +1,11 @@
 import React from 'react';
 import { Play, TrendingUp, Clock, Users } from 'lucide-react';
 
-const Home: React.FC = () => {
+interface HomeProps {
+  onNavigate: (tab: string) => void;
+}
+
+const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const stats = [
     { label: 'Songs Played', value: '1,247', icon: Play, color: 'from-purple-500 to-pink-500' },
     { label: 'Beat Accuracy', value: '94%', icon: TrendingUp, color: 'from-blue-500 to-cyan-500' },
@@ -65,7 +69,10 @@ const Home: React.FC = () => {
           <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
         </button>
 
-        <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-4 flex items-center justify-between hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105">
+        <button 
+          onClick={() => onNavigate('playlists')}
+          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-4 flex items-center justify-between hover:from-blue-600 hover:to-cyan-600 transition-all transform hover:scale-105"
+        >
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
               <TrendingUp className="w-5 h-5" />
@@ -84,7 +91,10 @@ const Home: React.FC = () => {
         <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
         <div className="space-y-3">
           {recentActivity.map((activity, index) => (
-            <div
+        <button 
+          onClick={() => onNavigate('games')}
+          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl p-4 flex items-center justify-between hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105"
+        >
               key={index}
               className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
             >

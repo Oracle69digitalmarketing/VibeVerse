@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Sparkles, Clock, Sun, Moon, Coffee, Zap, Heart, Brain } from 'lucide-react';
+import { Play, TrendingUp, Clock, Users, Sparkles, Sun, Trophy, Leaf, Zap, Heart, Brain, Music, Pause } from 'lucide-react';
+import SpotifyPlayer from './SpotifyPlayer';
 
 const MoodPlaylists: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState<any>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [generatedTracks, setGeneratedTracks] = useState<any[]>([]);
 
   const moods = [
     { 
@@ -60,10 +64,47 @@ const MoodPlaylists: React.FC = () => {
     setIsGenerating(true);
     setSelectedMood(moodId);
     
-    // Simulate AI generation
+    // Simulate AI generation with realistic tracks
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    const mood = moods.find(m => m.id === moodId);
+    if (mood) {
+      const tracks = mood.tracks.map((track, index) => {
+        const [title, artist] = track.split(' - ');
+        return {
+          id: `${moodId}_${index}`,
+          name: title,
+          artist: artist || 'Unknown Artist',
+          album: 'Generated Playlist',
+          duration: 180 + Math.random() * 120, // 3-5 minutes
+          image: `https://images.pexels.com/photos/${1000000 + index}/pexels-photo-${1000000 + index}.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop`
+        };
+      });
+      setGeneratedTracks(tracks);
+    }
+    
     setIsGenerating(false);
+  };
+
+  const playTrack = (track: any) => {
+    setCurrentTrack(track);
+    setIsPlaying(true);
+  };
+
+  const togglePlayback = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const nextTrack = () => {
+    const currentIndex = generatedTracks.findIndex(t => t.id === currentTrack?.id);
+    const nextIndex = (currentIndex + 1) % generatedTracks.length;
+    setCurrentTrack(generatedTracks[nextIndex]);
+  };
+
+  const previousTrack = () => {
+    const currentIndex = generatedTracks.findIndex(t => t.id === currentTrack?.id);
+    const prevIndex = currentIndex === 0 ? generatedTracks.length - 1 : currentIndex - 1;
+    setCurrentTrack(generatedTracks[prevIndex]);
   };
 
   const currentTime = new Date().getHours();
@@ -154,17 +195,24 @@ const MoodPlaylists: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              {moods.find(m => m.id === selectedMood)?.tracks.map((track, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">
+              {generatedTracks.map((track, index) => (
+                <div key={track.id} className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">
                   <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                     <span className="text-white text-sm font-bold">{index + 1}</span>
                   </div>
                   <div className="flex-1">
-                    <div className="text-white font-medium text-sm">{track}</div>
-                    <div className="text-white/60 text-xs">3:24</div>
+                    <div className="text-white font-medium text-sm">{track.name}</div>
+                    <div className="text-white/60 text-xs">{track.artist} • {Math.floor(track.duration / 60)}:{(track.duration % 60).toFixed(0).padStart(2, '0')}</div>
                   </div>
-                  <button className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                    <Play className="w-4 h-4 text-white" />
+                  <button 
+                    onClick={() => playTrack(track)}
+                    className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                  >
+                    {currentTrack?.id === track.id && isPlaying ? (
+                      <Pause className="w-4 h-4 text-white" />
+                    ) : (
+                      <Play className="w-4 h-4 text-white" />
+                    )}
                   </button>
                 </div>
               ))}
@@ -176,6 +224,19 @@ const MoodPlaylists: React.FC = () => {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Current Playing Track */}
+      {currentTrack && (
+        <div className="max-w-md mx-auto">
+          <SpotifyPlayer
+            track={currentTrack}
+            isPlaying={isPlaying}
+            onPlayPause={togglePlayback}
+            onNext={nextTrack}
+            onPrevious={previousTrack}
+          />
         </div>
       )}
 

@@ -57,6 +57,8 @@ const RhythmGames: React.FC = () => {
   }, []);
 
   const handleBeatHit = () => {
+    if (!isPlaying) return;
+    
     const hitZone = beats.find(beat => 
       beat.position >= 80 && beat.position <= 95 && !beat.hit
     );
@@ -203,9 +205,14 @@ const RhythmGames: React.FC = () => {
         {/* Tap Button */}
         <button
           onClick={handleBeatHit}
-          className="w-full mt-6 py-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-400 rounded-2xl text-white font-bold text-xl hover:bg-gradient-to-r hover:from-purple-500/30 hover:to-pink-500/30 transition-all transform active:scale-95"
+          disabled={!isPlaying}
+          className={`w-full mt-6 py-6 border-2 rounded-2xl font-bold text-xl transition-all transform active:scale-95 ${
+            isPlaying 
+              ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400 text-white hover:bg-gradient-to-r hover:from-purple-500/30 hover:to-pink-500/30' 
+              : 'bg-white/5 border-white/20 text-white/40 cursor-not-allowed'
+          }`}
         >
-          TAP TO THE BEAT
+          {isPlaying ? 'TAP TO THE BEAT' : 'PRESS PLAY TO START'}
         </button>
       </div>
 

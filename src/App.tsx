@@ -11,12 +11,12 @@ import { useAuth } from './hooks/useAuth';
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const { user, login, logout } = useAuth();
+  const { user, loading, login, loginWithSpotify, logout } = useAuth();
 
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'home':
-        return <Home />;
+        return <Home onNavigate={setActiveTab} />;
       case 'games':
         return <RhythmGames />;
       case 'playlists':
@@ -82,6 +82,8 @@ function App() {
         <AuthModal
           onClose={() => setShowAuthModal(false)}
           onLogin={login}
+          onSpotifyLogin={loginWithSpotify}
+          loading={loading}
         />
       )}
     </div>
