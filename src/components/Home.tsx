@@ -103,7 +103,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <div className="text-white/40 text-xs">{activity.time}</div>
               </div>
             </div>
-          </div>
         ))}
         </div>
       </div>
