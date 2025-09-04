@@ -1,17 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { Mic, Square, Play, Pause, Download, AudioWaveform as Waveform, Sparkles, Volume2, Music } from 'lucide-react';
+import { useVoiceRecording } from '../hooks/useVoiceRecording';
+import { useAudio } from '../hooks/useAudio';
 
 const RemixLab: React.FC = () => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [hasRecording, setHasRecording] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState('lofi');
   const [generatedBeat, setGeneratedBeat] = useState<string | null>(null);
-  const [recordingTime, setRecordingTime] = useState(0);
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { 
+    isRecording, 
+    hasRecording, 
+    isPlaying: isPlayingRecording, 
+    recordingTime,
+    startRecording,
+    stopRecording,
+    playRecording,
+    stopPlayback
+  } = useVoiceRecording();
+  
+  const { playBeatSound, playNotificationSound } = useAudio();
+  const [isBeatPlaying, setIsBeatPlaying] = useState(false);
 
   const genres = [
     { id: 'lofi', name: 'Lo-fi', color: 'from-blue-400 to-cyan-400', description: 'Chill and relaxed' },
@@ -21,48 +30,6 @@ const RemixLab: React.FC = () => {
     { id: 'jazz', name: 'Jazz', color: 'from-yellow-400 to-orange-400', description: 'Smooth and sophisticated' },
     { id: 'ambient', name: 'Ambient', color: 'from-indigo-400 to-purple-400', description: 'Atmospheric and dreamy' },
   ];
-
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-
-      mediaRecorder.start();
-      setIsRecording(true);
-      setRecordingTime(0);
-
-      recordingIntervalRef.current = setInterval(() => {
-        setRecordingTime(prev => prev + 0.1);
-      }, 100);
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          setHasRecording(true);
-        }
-      };
-
-      mediaRecorder.onstop = () => {
-        stream.getTracks().forEach(track => track.stop());
-        if (recordingIntervalRef.current) {
-          clearInterval(recordingIntervalRef.current);
-        }
-      };
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      alert('Unable to access microphone. Please check permissions.');
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      if (recordingIntervalRef.current) {
-        clearInterval(recordingIntervalRef.current);
-      }
-    }
-  };
 
   const generateBeat = async () => {
     if (!hasRecording) return;
@@ -74,12 +41,26 @@ const RemixLab: React.FC = () => {
     
     setGeneratedBeat(`${selectedGenre}-remix-${Date.now()}`);
     setIsGenerating(false);
+    playNotificationSound();
   };
 
-  const togglePlayback = () => {
-    setIsPlaying(!isPlaying);
+  const toggleRecordingPlayback = () => {
+    if (isPlayingRecording) {
+      stopPlayback();
+    } else {
+      playRecording();
+    }
   };
 
+  const toggleBeatPlayback = () => {
+    if (isBeatPlaying) {
+      setIsBeatPlaying(false);
+    } else {
+      setIsBeatPlaying(true);
+      // Play a generated beat sound
+      playBeatSound(220, 0.5); // Low frequency for beat
+    }
+  };
   return (
     <div className="min-h-screen p-4 space-y-6">
       {/* Header */}
@@ -158,10 +139,10 @@ const RemixLab: React.FC = () => {
 
             {hasRecording && (
               <button
-                onClick={togglePlayback}
+                onClick={toggleRecordingPlayback}
                 className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all border border-white/20"
               >
-                {isPlaying ? (
+                {isPlayingRecording ? (
                   <Pause className="w-6 h-6 text-white" />
                 ) : (
                   <Play className="w-6 h-6 text-white ml-1" />
@@ -179,7 +160,10 @@ const RemixLab: React.FC = () => {
           {genres.map((genre) => (
             <button
               key={genre.id}
-              onClick={() => setSelectedGenre(genre.id)}
+              onClick={() => {
+                setSelectedGenre(genre.id);
+                playNotificationSound();
+              }}
               className={`p-4 rounded-xl border transition-all duration-300 transform hover:scale-105 ${
                 selectedGenre === genre.id
                   ? 'bg-white/20 border-white/40 scale-105'
@@ -258,11 +242,11 @@ const RemixLab: React.FC = () => {
           {/* Playback Controls */}
           <div className="flex items-center justify-between">
             <button
-              onClick={togglePlayback}
+              onClick={toggleBeatPlayback}
               className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all"
             >
-              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-1" />}
-              <span>{isPlaying ? 'Pause' : 'Play'}</span>
+              {isBeatPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-1" />}
+              <span>{isBeatPlaying ? 'Pause' : 'Play'}</span>
             </button>
 
             <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all border border-white/20">
@@ -286,7 +270,10 @@ const RemixLab: React.FC = () => {
                 <div className="text-white font-medium">{remix}</div>
                 <div className="text-white/60 text-sm">2 days ago • 1:23</div>
               </div>
-              <button className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+              <button 
+                onClick={() => playBeatSound(440 + index * 100, 0.3)}
+                className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+              >
                 <Play className="w-4 h-4 text-white" />
               </button>
             </div>

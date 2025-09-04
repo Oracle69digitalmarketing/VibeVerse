@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Play, TrendingUp, Clock, Users, Sparkles, Sun, Trophy, Leaf, Zap, Heart, Brain, Music, Pause, Coffee, Moon } from 'lucide-react';
 import SpotifyPlayer from './SpotifyPlayer';
+import { useAudio } from '../hooks/useAudio';
 
 const MoodPlaylists: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
@@ -8,6 +9,8 @@ const MoodPlaylists: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [generatedTracks, setGeneratedTracks] = useState<any[]>([]);
+  
+  const { playTrack, pause, resume, playNotificationSound } = useAudio();
 
   const moods = [
     { 
@@ -77,7 +80,9 @@ const MoodPlaylists: React.FC = () => {
           artist: artist || 'Unknown Artist',
           album: 'Generated Playlist',
           duration: 180 + Math.random() * 120, // 3-5 minutes
-          image: `https://images.pexels.com/photos/${1000000 + index}/pexels-photo-${1000000 + index}.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop`
+          image: `https://images.pexels.com/photos/${1000000 + index}/pexels-photo-${1000000 + index}.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop`,
+          // Use royalty-free music URLs or generate audio tones
+          url: `https://www.soundjay.com/misc/sounds/bell-ringing-05.wav` // Placeholder - in real app would be actual music URLs
         };
       });
       setGeneratedTracks(tracks);
@@ -86,13 +91,33 @@ const MoodPlaylists: React.FC = () => {
     setIsGenerating(false);
   };
 
-  const playTrack = (track: any) => {
+  const handlePlayTrack = async (track: any) => {
     setCurrentTrack(track);
+    
+    try {
+      await playTrack({
+        id: track.id,
+        name: track.name,
+        artist: track.artist,
+        url: track.url,
+        duration: track.duration
+      });
+    } catch (error) {
     setIsPlaying(true);
+      playNotificationSound(); // Fallback sound
+    }
   };
 
   const togglePlayback = () => {
-    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      pause();
+      setIsPlaying(false);
+    } else {
+      if (currentTrack) {
+        resume();
+        setIsPlaying(true);
+      }
+    }
   };
 
   const nextTrack = () => {
@@ -205,7 +230,7 @@ const MoodPlaylists: React.FC = () => {
                     <div className="text-white/60 text-xs">{track.artist} • {Math.floor(track.duration / 60)}:{(track.duration % 60).toFixed(0).padStart(2, '0')}</div>
                   </div>
                   <button 
-                    onClick={() => playTrack(track)}
+                    onClick={() => handlePlayTrack(track)}
                     className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
                   >
                     {currentTrack?.id === track.id && isPlaying ? (

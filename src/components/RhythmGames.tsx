@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Trophy, Target } from 'lucide-react';
+import { useAudio } from '../hooks/useAudio';
 
 const RhythmGames: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -16,6 +17,7 @@ const RhythmGames: React.FC = () => {
 
   const gameRef = useRef<HTMLDivElement>(null);
   const beatIdRef = useRef(0);
+  const { playBeatSound, playNotificationSound } = useAudio();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -59,6 +61,9 @@ const RhythmGames: React.FC = () => {
   const handleBeatHit = () => {
     if (!isPlaying) return;
     
+    // Play hit sound
+    playBeatSound(800, 0.1);
+    
     const hitZone = beats.find(beat => 
       beat.position >= 80 && beat.position <= 95 && !beat.hit
     );
@@ -77,9 +82,16 @@ const RhythmGames: React.FC = () => {
 
       // Update accuracy
       setAccuracy(prev => Math.min(100, prev + (points - 50) / 10));
+      
+      // Play success sound for good hits
+      if (points > 80) {
+        setTimeout(() => playBeatSound(1200, 0.05), 50);
+      }
     } else {
       setCombo(0);
       setAccuracy(prev => Math.max(0, prev - 5));
+      // Play miss sound
+      playBeatSound(200, 0.2);
     }
   };
 
@@ -91,6 +103,12 @@ const RhythmGames: React.FC = () => {
     setGameTime(0);
     setBeats([]);
     beatIdRef.current = 0;
+    playNotificationSound();
+  };
+
+  const toggleGame = () => {
+    setIsPlaying(!isPlaying);
+    playNotificationSound();
   };
 
   return (
@@ -184,7 +202,7 @@ const RhythmGames: React.FC = () => {
         {/* Controls */}
         <div className="flex items-center justify-center space-x-4 mt-6">
           <button
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={toggleGame}
             className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-110 shadow-lg"
           >
             {isPlaying ? (
