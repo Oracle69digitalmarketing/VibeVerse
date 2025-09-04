@@ -23,6 +23,7 @@ export const useAuth = () => {
 
   const login = async (provider: string) => {
     setLoading(true);
+    console.log('Login attempt with provider:', provider);
     
     try {
       // Simulate authentication with more realistic flow
@@ -38,6 +39,7 @@ export const useAuth = () => {
 
       setUser(mockUser);
       localStorage.setItem('vibeverse_user', JSON.stringify(mockUser));
+      console.log('Login successful:', mockUser);
     } catch (error) {
       console.error('Login failed:', error);
     } finally {

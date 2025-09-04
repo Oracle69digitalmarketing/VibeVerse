@@ -206,9 +206,9 @@ const RhythmGames: React.FC = () => {
         <button
           onClick={handleBeatHit}
           disabled={!isPlaying}
-          className={`w-full mt-6 py-6 border-2 rounded-2xl font-bold text-xl transition-all transform active:scale-95 ${
+          className={`w-full mt-6 py-6 border-2 rounded-2xl font-bold text-xl transition-all transform ${
             isPlaying 
-              ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400 text-white hover:bg-gradient-to-r hover:from-purple-500/30 hover:to-pink-500/30' 
+              ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400 text-white hover:bg-gradient-to-r hover:from-purple-500/30 hover:to-pink-500/30 active:scale-95 cursor-pointer' 
               : 'bg-white/5 border-white/20 text-white/40 cursor-not-allowed'
           }`}
         >

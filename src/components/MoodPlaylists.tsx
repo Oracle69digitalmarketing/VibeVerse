@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, TrendingUp, Clock, Users, Sparkles, Sun, Trophy, Leaf, Zap, Heart, Brain, Music, Pause } from 'lucide-react';
+import { Play, TrendingUp, Clock, Users, Sparkles, Sun, Trophy, Leaf, Zap, Heart, Brain, Music, Pause, Coffee, Moon } from 'lucide-react';
 import SpotifyPlayer from './SpotifyPlayer';
 
 const MoodPlaylists: React.FC = () => {

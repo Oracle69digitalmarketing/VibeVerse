@@ -11,11 +11,13 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSpotifyLogin, loading }) => {
   const handleSpotifyLogin = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log('Spotify login clicked');
     onSpotifyLogin();
   };
 
   const handleGoogleLogin = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log('Google login clicked');
     onLogin('google');
   };
 

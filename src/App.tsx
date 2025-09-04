@@ -13,7 +13,12 @@ function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const { user, loading, login, loginWithSpotify, logout } = useAuth();
 
+  // Debug logging
+  console.log('Current activeTab:', activeTab);
+  console.log('User state:', user);
+
   const renderActiveTab = () => {
+    console.log('Rendering tab:', activeTab);
     switch (activeTab) {
       case 'home':
         return <Home onNavigate={setActiveTab} />;

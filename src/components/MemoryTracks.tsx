@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Heart, Calendar, Camera, Music, Edit3, Trash2 } from 'lucide-react';
+import { Plus, Heart, Calendar, Camera, Music, Edit3, Trash2, Sun, Trophy, Clock, Leaf, Zap } from 'lucide-react';
 
 interface Memory {
   id: number;

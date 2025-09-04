@@ -25,7 +25,10 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                console.log('Navigation clicked:', tab.id);
+                setActiveTab(tab.id);
+              }}
               className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-lg transition-all duration-300 ${
                 isActive
                   ? 'text-purple-400 bg-purple-500/20 transform scale-110'

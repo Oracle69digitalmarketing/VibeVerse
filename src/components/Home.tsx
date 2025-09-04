@@ -91,10 +91,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
         <div className="space-y-3">
           {recentActivity.map((activity, index) => (
-        <button 
-          onClick={() => onNavigate('games')}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl p-4 flex items-center justify-between hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105"
-        >
+          <div
               key={index}
               className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
             >
@@ -106,7 +103,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <div className="text-white/40 text-xs">{activity.time}</div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
         </div>
       </div>
     </div>
