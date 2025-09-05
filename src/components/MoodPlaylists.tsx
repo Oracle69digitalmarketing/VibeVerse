@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Play, TrendingUp, Clock, Users, Sparkles, Sun, Trophy, Leaf, Zap, Heart, Brain, Music, Pause, Coffee, Moon } from 'lucide-react';
 import SpotifyPlayer from './SpotifyPlayer';
 import { useAudio } from '../hooks/useAudio';
+import { getTracksByMood, MusicTrack } from '../data/musicTracks';
 
 const MoodPlaylists: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [currentTrack, setCurrentTrack] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [generatedTracks, setGeneratedTracks] = useState<any[]>([]);
+  const [generatedTracks, setGeneratedTracks] = useState<MusicTrack[]>([]);
   
   const { playTrack, pause, resume, playNotificationSound } = useAudio();
 
@@ -18,48 +19,42 @@ const MoodPlaylists: React.FC = () => {
       name: 'Chill Vibes', 
       icon: Coffee, 
       color: 'from-blue-400 to-cyan-400',
-      description: 'Relaxed and mellow tracks for unwinding',
-      tracks: ['Weightless - Marconi Union', 'Clair de Lune - Debussy', 'Porcelain - Moby']
+      description: 'Relaxed and mellow tracks for unwinding'
     },
     { 
       id: 'hype', 
       name: 'Hype Energy', 
       icon: Zap, 
       color: 'from-orange-400 to-red-400',
-      description: 'High-energy beats to pump you up',
-      tracks: ['Till I Collapse - Eminem', 'Thunderstruck - AC/DC', 'Pump It - Black Eyed Peas']
+      description: 'High-energy beats to pump you up'
     },
     { 
       id: 'reflective', 
       name: 'Reflective', 
       icon: Brain, 
       color: 'from-purple-400 to-indigo-400',
-      description: 'Thoughtful music for deep contemplation',
-      tracks: ['Mad World - Gary Jules', 'Hurt - Johnny Cash', 'Black - Pearl Jam']
+      description: 'Thoughtful music for deep contemplation'
     },
     { 
       id: 'romantic', 
       name: 'Romantic', 
       icon: Heart, 
       color: 'from-pink-400 to-rose-400',
-      description: 'Love songs and intimate melodies',
-      tracks: ['Perfect - Ed Sheeran', 'All of Me - John Legend', 'Thinking Out Loud - Ed Sheeran']
+      description: 'Love songs and intimate melodies'
     },
     { 
       id: 'morning', 
       name: 'Morning Boost', 
       icon: Sun, 
       color: 'from-yellow-400 to-orange-400',
-      description: 'Uplifting tracks to start your day',
-      tracks: ['Good as Hell - Lizzo', 'Happy - Pharrell Williams', 'Walking on Sunshine - Katrina']
+      description: 'Uplifting tracks to start your day'
     },
     { 
       id: 'night', 
       name: 'Night Vibes', 
       icon: Moon, 
       color: 'from-indigo-400 to-purple-400',
-      description: 'Smooth late-night listening',
-      tracks: ['Midnight City - M83', 'Nightcall - Kavinsky', 'Blinding Lights - The Weeknd']
+      description: 'Smooth late-night listening'
     },
   ];
 
@@ -67,28 +62,15 @@ const MoodPlaylists: React.FC = () => {
     setIsGenerating(true);
     setSelectedMood(moodId);
     
-    // Simulate AI generation with realistic tracks
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate AI generation with real tracks
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
-    const mood = moods.find(m => m.id === moodId);
-    if (mood) {
-      const tracks = mood.tracks.map((track, index) => {
-        const [title, artist] = track.split(' - ');
-        return {
-          id: `${moodId}_${index}`,
-          name: title,
-          artist: artist || 'Unknown Artist',
-          album: 'Generated Playlist',
-          duration: 180 + Math.random() * 120, // 3-5 minutes
-          image: `https://images.pexels.com/photos/${1000000 + index}/pexels-photo-${1000000 + index}.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop`,
-          // Use royalty-free music URLs or generate audio tones
-          url: `https://www.soundjay.com/misc/sounds/bell-ringing-05.wav` // Placeholder - in real app would be actual music URLs
-        };
-      });
-      setGeneratedTracks(tracks);
-    }
+    // Get real tracks for the selected mood
+    const tracks = getTracksByMood(moodId);
+    setGeneratedTracks(tracks);
     
     setIsGenerating(false);
+    playNotificationSound();
   };
 
   const handlePlayTrack = async (track: any) => {
@@ -102,9 +84,11 @@ const MoodPlaylists: React.FC = () => {
         url: track.url,
         duration: track.duration
       });
+      setIsPlaying(true);
     } catch (error) {
-    setIsPlaying(true);
+      console.error('Error playing track:', error);
       playNotificationSound(); // Fallback sound
+      setIsPlaying(true);
     }
   };
 

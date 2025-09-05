@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Trophy, Target } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
+import { getRandomTracks } from '../data/musicTracks';
 
 const RhythmGames: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -9,11 +10,7 @@ const RhythmGames: React.FC = () => {
   const [accuracy, setAccuracy] = useState(100);
   const [gameTime, setGameTime] = useState(0);
   const [beats, setBeats] = useState<Array<{ id: number; position: number; hit: boolean }>>([]);
-  const [currentSong] = useState({
-    title: "Blinding Lights",
-    artist: "The Weeknd",
-    bpm: 171
-  });
+  const [currentSong] = useState(getRandomTracks(1)[0]);
 
   const gameRef = useRef<HTMLDivElement>(null);
   const beatIdRef = useRef(0);
@@ -30,7 +27,7 @@ const RhythmGames: React.FC = () => {
       }, 100);
 
       // Beat generation based on BPM
-      const beatDelay = (60 / currentSong.bpm) * 1000;
+      const beatDelay = (60 / 120) * 1000; // Default 120 BPM
       beatInterval = setInterval(() => {
         setBeats(prev => [
           ...prev,
@@ -43,7 +40,7 @@ const RhythmGames: React.FC = () => {
       clearInterval(interval);
       clearInterval(beatInterval);
     };
-  }, [isPlaying, currentSong.bpm]);
+  }, [isPlaying]);
 
   useEffect(() => {
     // Move beats down the screen
@@ -126,9 +123,9 @@ const RhythmGames: React.FC = () => {
             <Play className="w-8 h-8 text-white" />
           </div>
           <div className="flex-1">
-            <h3 className="text-white font-semibold text-lg">{currentSong.title}</h3>
+            <h3 className="text-white font-semibold text-lg">{currentSong.name}</h3>
             <p className="text-white/60">{currentSong.artist}</p>
-            <p className="text-white/40 text-sm">{currentSong.bpm} BPM</p>
+            <p className="text-white/40 text-sm">120 BPM</p>
           </div>
         </div>
       </div>

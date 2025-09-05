@@ -77,7 +77,7 @@ export const useAudio = () => {
       if (!currentTrack || currentTrack.id !== track.id) {
         audioRef.current.src = track.url;
         setCurrentTrack(track);
-        await audioRef.current.load();
+        audioRef.current.load();
       }
       
       await audioRef.current.play();
@@ -85,8 +85,22 @@ export const useAudio = () => {
       console.log('Playing:', track.name);
     } catch (error) {
       console.error('Error playing audio:', error);
-      // Fallback to a notification sound if the track URL fails
-      playNotificationSound();
+      
+      // If the URL fails, try to play anyway or show error
+      try {
+        // Try to play with a slight delay
+        setTimeout(async () => {
+          try {
+            await audioRef.current?.play();
+            setIsPlaying(true);
+          } catch (retryError) {
+            console.error('Retry failed:', retryError);
+            playNotificationSound(); // Fallback sound
+          }
+        }, 500);
+      } catch (fallbackError) {
+        playNotificationSound();
+      }
     }
   };
 
