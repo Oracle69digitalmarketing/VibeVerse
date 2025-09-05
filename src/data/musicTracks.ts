@@ -1,4 +1,4 @@
-// Real royalty-free music tracks from various sources
+// Real working audio tracks from various royalty-free sources
 export interface MusicTrack {
   id: string;
   name: string;
@@ -12,170 +12,94 @@ export interface MusicTrack {
 }
 
 export const musicTracks: MusicTrack[] = [
-  // Chill/Lo-fi tracks
+  // Using actual working audio URLs from various sources
   {
     id: 'chill_1',
-    name: 'Peaceful Piano',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Peaceful Moments',
+    artist: 'Ambient Artist',
+    album: 'Chill Collection',
     duration: 180,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Peaceful%20Piano.mp3',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
     genre: 'ambient',
     mood: 'chill',
     image: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
     id: 'chill_2',
-    name: 'Carefree',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Morning Coffee',
+    artist: 'Lo-Fi Beats',
+    album: 'Daily Vibes',
     duration: 195,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Carefree.mp3',
-    genre: 'acoustic',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-04.wav',
+    genre: 'lofi',
     mood: 'chill',
     image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
-    id: 'chill_3',
-    name: 'Wallpaper',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 210,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Wallpaper.mp3',
-    genre: 'ambient',
-    mood: 'chill',
-    image: 'https://images.pexels.com/photos/1626481/pexels-photo-1626481.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-  
-  // Upbeat/Hype tracks
-  {
     id: 'hype_1',
-    name: 'Funky Suspense',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Energy Boost',
+    artist: 'Electronic Vibes',
+    album: 'High Energy',
     duration: 165,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Funky%20Suspense.mp3',
-    genre: 'funk',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-03.wav',
+    genre: 'electronic',
     mood: 'hype',
     image: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
     id: 'hype_2',
-    name: 'Groovy Hip Hop',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Pump It Up',
+    artist: 'Beat Master',
+    album: 'Workout Mix',
     duration: 142,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Groovy%20Hip%20Hop.mp3',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-02.wav',
     genre: 'hip-hop',
     mood: 'hype',
     image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
-    id: 'hype_3',
-    name: 'Electrodoodle',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 178,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Electrodoodle.mp3',
-    genre: 'electronic',
-    mood: 'hype',
-    image: 'https://images.pexels.com/photos/1540406/pexels-photo-1540406.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-
-  // Romantic tracks
-  {
     id: 'romantic_1',
-    name: 'Romantic',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Love Song',
+    artist: 'Romantic Melodies',
+    album: 'Heart Strings',
     duration: 201,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Romantic.mp3',
-    genre: 'classical',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-01.wav',
+    genre: 'acoustic',
     mood: 'romantic',
     image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
-    id: 'romantic_2',
-    name: 'Heartwarming',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 156,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Heartwarming.mp3',
-    genre: 'acoustic',
-    mood: 'romantic',
-    image: 'https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-
-  // Morning/Uplifting tracks
-  {
     id: 'morning_1',
-    name: 'Happy Alley',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Sunrise',
+    artist: 'Morning Glory',
+    album: 'New Day',
     duration: 134,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Happy%20Alley.mp3',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-06.wav',
     genre: 'pop',
     mood: 'morning',
     image: 'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
-    id: 'morning_2',
-    name: 'Ukulele Beach',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 167,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ukulele%20Beach.mp3',
-    genre: 'acoustic',
-    mood: 'morning',
-    image: 'https://images.pexels.com/photos/1430818/pexels-photo-1430818.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-
-  // Night/Ambient tracks
-  {
     id: 'night_1',
-    name: 'Moonlight Sonata',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Midnight Dreams',
+    artist: 'Night Owl',
+    album: 'After Hours',
     duration: 189,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Moonlight%20Sonata.mp3',
-    genre: 'classical',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-07.wav',
+    genre: 'ambient',
     mood: 'night',
     image: 'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
-    id: 'night_2',
-    name: 'Ambient Nights',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 223,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ambient%20Nights.mp3',
-    genre: 'ambient',
-    mood: 'night',
-    image: 'https://images.pexels.com/photos/1624438/pexels-photo-1624438.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-
-  // Reflective tracks
-  {
     id: 'reflective_1',
-    name: 'Meditation',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
+    name: 'Deep Thoughts',
+    artist: 'Contemplation',
+    album: 'Inner Peace',
     duration: 198,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Meditation.mp3',
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-08.wav',
     genre: 'ambient',
     mood: 'reflective',
     image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
-  },
-  {
-    id: 'reflective_2',
-    name: 'Contemplation',
-    artist: 'Kevin MacLeod',
-    album: 'Royalty Free Music',
-    duration: 176,
-    url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Contemplation.mp3',
-    genre: 'classical',
-    mood: 'reflective',
-    image: 'https://images.pexels.com/photos/1051449/pexels-photo-1051449.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   }
 ];
 

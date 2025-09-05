@@ -80,22 +80,32 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       {/* Track Info */}
       <div className="flex items-center space-x-4 mb-4">
         <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-          <img 
-            src={track.image} 
-            alt={track.album}
-            className="w-full h-full object-cover rounded-xl"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              target.nextElementSibling?.classList.remove('hidden');
-            }}
-          />
-          <div className="hidden w-8 h-8 text-white">♪</div>
+          {track.image ? (
+            <img 
+              src={track.image} 
+              alt={track.album}
+              className="w-full h-full object-cover rounded-xl"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.parentElement?.classList.add('flex', 'items-center', 'justify-center');
+                const musicIcon = document.createElement('div');
+                musicIcon.innerHTML = '♪';
+                musicIcon.className = 'text-white text-2xl';
+                target.parentElement?.appendChild(musicIcon);
+              }}
+            />
+          ) : (
+            <div className="text-white text-2xl">♪</div>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-white font-semibold truncate">{track.name}</h3>
           <p className="text-white/60 text-sm truncate">{track.artist}</p>
           <p className="text-white/40 text-xs truncate">{track.album}</p>
+          <p className="text-white/40 text-xs">
+            {isPlaying ? '🔊 Playing' : '⏸️ Paused'}
+          </p>
         </div>
       </div>
 

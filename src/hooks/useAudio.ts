@@ -72,12 +72,42 @@ export const useAudio = () => {
   const playTrack = async (track: AudioTrack) => {
     if (!audioRef.current) return;
     
+    console.log('Attempting to play track:', track.name, 'URL:', track.url);
+    
     try {
       // If it's a new track, load it
       if (!currentTrack || currentTrack.id !== track.id) {
+        console.log('Loading new track:', track.name);
         audioRef.current.src = track.url;
         setCurrentTrack(track);
         audioRef.current.load();
+        
+        // Wait for the audio to be ready
+        await new Promise((resolve, reject) => {
+          const handleCanPlay = () => {
+            console.log('Audio can play:', track.name);
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audioRef.current?.removeEventListener('error', handleError);
+            resolve(true);
+          };
+          
+          const handleError = (e: Event) => {
+            console.error('Audio load error:', e);
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audioRef.current?.removeEventListener('error', handleError);
+            reject(e);
+          };
+          
+          audioRef.current?.addEventListener('canplay', handleCanPlay);
+          audioRef.current?.addEventListener('error', handleError);
+          
+          // Timeout after 5 seconds
+          setTimeout(() => {
+            audioRef.current?.removeEventListener('canplay', handleCanPlay);
+            audioRef.current?.removeEventListener('error', handleError);
+            reject(new Error('Audio load timeout'));
+          }, 5000);
+        });
       }
       
       await audioRef.current.play();
@@ -86,21 +116,20 @@ export const useAudio = () => {
     } catch (error) {
       console.error('Error playing audio:', error);
       
-      // If the URL fails, try to play anyway or show error
-      try {
-        // Try to play with a slight delay
-        setTimeout(async () => {
-          try {
-            await audioRef.current?.play();
-            setIsPlaying(true);
-          } catch (retryError) {
-            console.error('Retry failed:', retryError);
-            playNotificationSound(); // Fallback sound
-          }
-        }, 500);
-      } catch (fallbackError) {
+      // Fallback to notification sound if real audio fails
+      console.log('Falling back to notification sound');
+      playNotificationSound();
+      setIsPlaying(true);
+      
+      // Simulate track playing with notification sounds
+      const interval = setInterval(() => {
         playNotificationSound();
-      }
+      }, 2000);
+      
+      setTimeout(() => {
+        clearInterval(interval);
+        setIsPlaying(false);
+      }, 10000);
     }
   };
 

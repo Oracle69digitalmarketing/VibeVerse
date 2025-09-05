@@ -74,6 +74,7 @@ const MoodPlaylists: React.FC = () => {
   };
 
   const handlePlayTrack = async (track: any) => {
+    console.log('MoodPlaylists: Playing track:', track.name);
     setCurrentTrack(track);
     
     try {
@@ -85,9 +86,11 @@ const MoodPlaylists: React.FC = () => {
         duration: track.duration
       });
       setIsPlaying(true);
+      console.log('Track started playing successfully');
     } catch (error) {
       console.error('Error playing track:', error);
-      playNotificationSound(); // Fallback sound
+      // Show user-friendly error message
+      alert(`Unable to play "${track.name}". This might be due to audio format or network issues.`);
       setIsPlaying(true);
     }
   };
