@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat } from 'lucide-react';
-import { useAudio } from '../hooks/useAudio';
 
 interface Track {
   id: string;
@@ -14,36 +13,38 @@ interface Track {
 interface SpotifyPlayerProps {
   track: Track;
   isPlaying: boolean;
+  currentTime: number;
+  duration: number;
+  volume: number;
   onPlayPause: () => void;
   onNext: () => void;
   onPrevious: () => void;
+  onSeek: (time: number) => void;
+  onVolumeChange: (volume: number) => void;
 }
 
 const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   track,
   isPlaying,
+  currentTime,
+  duration,
+  volume,
   onPlayPause,
   onNext,
-  onPrevious
+  onPrevious,
+  onSeek,
+  onVolumeChange
 }) => {
-  const { 
-    currentTime, 
-    duration, 
-    volume, 
-    setVolume, 
-    seek,
-    playNotificationSound 
-  } = useAudio();
-  
   const [progress, setProgress] = useState(0);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
 
   useEffect(() => {
-    if (duration > 0) {
-      setProgress((currentTime / duration) * 100);
+    const trackDuration = duration || track.duration;
+    if (trackDuration > 0) {
+      setProgress((currentTime / trackDuration) * 100);
     }
-  }, [currentTime, duration]);
+  }, [currentTime, duration, track.duration]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -55,24 +56,23 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newProgress = (clickX / rect.width) * 100;
-    const newTime = (newProgress / 100) * (duration || track.duration);
-    seek(newTime);
+    const trackDuration = duration || track.duration;
+    const newTime = (newProgress / 100) * trackDuration;
+    onSeek(newTime);
     setProgress(newProgress);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = Number(e.target.value) / 100;
-    setVolume(newVolume);
+    onVolumeChange(newVolume);
   };
 
   const handleShuffleClick = () => {
     setShuffle(!shuffle);
-    playNotificationSound();
   };
 
   const handleRepeatClick = () => {
     setRepeat(!repeat);
-    playNotificationSound();
   };
 
   return (
@@ -112,8 +112,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       {/* Progress Bar */}
       <div className="mb-4">
         <div className="flex items-center justify-between text-white/60 text-xs mb-2">
-          <span>{formatTime(currentTime || (progress / 100) * track.duration)}</span>
-          <span>{formatTime(track.duration)}</span>
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration || track.duration)}</span>
         </div>
         <div 
           className="w-full bg-white/20 rounded-full h-1 cursor-pointer"

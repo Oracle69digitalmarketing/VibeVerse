@@ -11,7 +11,17 @@ const MoodPlaylists: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [generatedTracks, setGeneratedTracks] = useState<MusicTrack[]>([]);
   
-  const { playTrack, pause, resume, playNotificationSound } = useAudio();
+  const { 
+    playTrack, 
+    pause, 
+    resume, 
+    playNotificationSound, 
+    currentTime, 
+    duration, 
+    volume, 
+    seek, 
+    setVolume 
+  } = useAudio();
 
   const moods = [
     { 
@@ -244,9 +254,14 @@ const MoodPlaylists: React.FC = () => {
           <SpotifyPlayer
             track={currentTrack}
             isPlaying={isPlaying}
+            currentTime={currentTime}
+            duration={duration}
+            volume={volume}
             onPlayPause={togglePlayback}
             onNext={nextTrack}
             onPrevious={previousTrack}
+            onSeek={seek}
+            onVolumeChange={setVolume}
           />
         </div>
       )}
