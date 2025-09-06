@@ -86,11 +86,10 @@ const MoodPlaylists: React.FC = () => {
         duration: track.duration
       });
       setIsPlaying(true);
-      console.log('Track started playing successfully');
+      console.log('✅ Track started playing successfully');
     } catch (error) {
       console.error('Error playing track:', error);
-      // Show user-friendly error message
-      alert(`Unable to play "${track.name}". This might be due to audio format or network issues.`);
+      // Don't show alert, let the fallback handle it
       setIsPlaying(true);
     }
   };

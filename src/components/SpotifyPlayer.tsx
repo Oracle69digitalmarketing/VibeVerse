@@ -55,7 +55,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newProgress = (clickX / rect.width) * 100;
-    const newTime = (newProgress / 100) * track.duration;
+    const newTime = (newProgress / 100) * (duration || track.duration);
     seek(newTime);
     setProgress(newProgress);
   };
