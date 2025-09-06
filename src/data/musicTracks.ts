@@ -15,33 +15,33 @@ export const musicTracks: MusicTrack[] = [
   // Chill tracks
   {
     id: 'chill_1',
-    name: 'Peaceful Moments',
-    artist: 'Ambient Dreams',
+    name: 'Peace Of Mind',
+    artist: 'Roa Music',
     album: 'Chill Collection',
-    duration: 45,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/roa-music/mp3/roa-music-peace-of-mind.mp3',
     genre: 'ambient',
     mood: 'chill',
-    image: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+    image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
     id: 'chill_2',
     name: 'Morning Coffee',
     artist: 'Lo-Fi Collective',
     album: 'Daily Vibes',
-    duration: 38,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-04.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/mixaund/mp3/mixaund-motivate-me.mp3',
     genre: 'lofi',
     mood: 'chill',
-    image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+    image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
   },
   {
     id: 'chill_3',
     name: 'Sunset Breeze',
     artist: 'Calm Waters',
     album: 'Evening Moods',
-    duration: 52,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-06.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/corporate-music-zone/wav/corporate-music-zone-journey-ahead-loop.rar',
     genre: 'ambient',
     mood: 'chill',
     image: 'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -50,11 +50,11 @@ export const musicTracks: MusicTrack[] = [
   // Hype tracks
   {
     id: 'hype_1',
-    name: 'Energy Boost',
-    artist: 'Electronic Pulse',
+    name: 'Rebel',
+    artist: 'Alex-Productions',
     album: 'High Energy',
-    duration: 28,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-03.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/alex-productions/mp3/alex-productions-cyberpunk-gaming-trailer-rebel-music-bundle.mp3',
     genre: 'electronic',
     mood: 'hype',
     image: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -64,8 +64,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Pump It Up',
     artist: 'Beat Crusher',
     album: 'Workout Mix',
-    duration: 32,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-02.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/alex-productions/mp3/alex-productions-training-day.mp3',
     genre: 'hip-hop',
     mood: 'hype',
     image: 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -75,8 +75,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Thunder Strike',
     artist: 'Power Surge',
     album: 'Maximum Energy',
-    duration: 25,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-01.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/alex-productions/mp3/alex-productions-blockbuster.mp3',
     genre: 'rock',
     mood: 'hype',
     image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -85,11 +85,11 @@ export const musicTracks: MusicTrack[] = [
   // Romantic tracks
   {
     id: 'romantic_1',
-    name: 'Love Song',
-    artist: 'Romantic Melodies',
+    name: 'Horizons',
+    artist: 'Alex-Productions',
     album: 'Heart Strings',
-    duration: 42,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-07.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/alex-productions/mp3/alex-productions-horizons.mp3',
     genre: 'acoustic',
     mood: 'romantic',
     image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -99,8 +99,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Moonlight Serenade',
     artist: 'Tender Hearts',
     album: 'Love Collection',
-    duration: 48,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-08.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/ethereal88/mp3/ethereal88-rising-dawn.mp3',
     genre: 'jazz',
     mood: 'romantic',
     image: 'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -112,8 +112,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Sunrise',
     artist: 'Morning Glory',
     album: 'New Day',
-    duration: 35,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/mixaund/mp3/mixaund-bright-horizons.mp3',
     genre: 'pop',
     mood: 'morning',
     image: 'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -123,8 +123,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Fresh Start',
     artist: 'Dawn Chorus',
     album: 'Morning Rituals',
-    duration: 29,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-04.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/jay-someday/mp3/jay-someday-feelgood.mp3',
     genre: 'indie',
     mood: 'morning',
     image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -136,8 +136,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Midnight Dreams',
     artist: 'Night Owl',
     album: 'After Hours',
-    duration: 55,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-03.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/escp/mp3/escp-sky-mall.mp3',
     genre: 'ambient',
     mood: 'night',
     image: 'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -147,8 +147,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'City Lights',
     artist: 'Urban Nights',
     album: 'Nocturnal',
-    duration: 41,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-02.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/escp/mp3/escp-neon-metaphor.mp3',
     genre: 'electronic',
     mood: 'night',
     image: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -160,8 +160,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Deep Thoughts',
     artist: 'Contemplation',
     album: 'Inner Peace',
-    duration: 62,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-01.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/oraeth/mp3/oraeth-overload.mp3',
     genre: 'ambient',
     mood: 'reflective',
     image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
@@ -171,8 +171,8 @@ export const musicTracks: MusicTrack[] = [
     name: 'Meditation Flow',
     artist: 'Mindful Moments',
     album: 'Zen Garden',
-    duration: 58,
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-07.wav',
+    duration: 180,
+    url: 'https://www.free-stock-music.com/music/roa-music/mp3/roa-music-alone-in-the-rain.mp3',
     genre: 'new age',
     mood: 'reflective',
     image: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
