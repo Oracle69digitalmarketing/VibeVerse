@@ -7,6 +7,7 @@ import MemoryTracks from './components/MemoryTracks';
 import RemixLab from './components/RemixLab';
 import AuthModal from './components/AuthModal';
 import { useAuth } from './hooks/useAuth';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -91,6 +92,7 @@ function App() {
           loading={loading}
         />
       )}
+      <Analytics />
     </div>
   );
 }

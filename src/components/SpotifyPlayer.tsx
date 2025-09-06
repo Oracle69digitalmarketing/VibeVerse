@@ -16,6 +16,8 @@ interface SpotifyPlayerProps {
   currentTime: number;
   duration: number;
   volume: number;
+  loading: boolean;
+  analyser: AnalyserNode | null;
   onPlayPause: () => void;
   onNext: () => void;
   onPrevious: () => void;
@@ -29,6 +31,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   currentTime,
   duration,
   volume,
+  loading,
+  analyser,
   onPlayPause,
   onNext,
   onPrevious,
@@ -38,6 +42,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const [progress, setProgress] = useState(0);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const trackDuration = duration || track.duration;
@@ -45,6 +50,45 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       setProgress((currentTime / trackDuration) * 100);
     }
   }, [currentTime, duration, track.duration]);
+
+  useEffect(() => {
+    if (!analyser || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const canvasCtx = canvas.getContext('2d');
+    if (!canvasCtx) return;
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    const draw = () => {
+      requestAnimationFrame(draw);
+
+      analyser.getByteFrequencyData(dataArray);
+
+      canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+      canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let barHeight;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i];
+
+        const gradient = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, `hsl(${barHeight + 100}, 100%, 50%)`);
+        gradient.addColorStop(1, `hsl(${barHeight}, 100%, 50%)`);
+        canvasCtx.fillStyle = gradient;
+
+        canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+
+        x += barWidth + 1;
+      }
+    };
+
+    draw();
+  }, [analyser]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -100,7 +144,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-semibold truncate">{track.name}</h3>
+          <h3 className="text-white font-semibold truncate">{track.name} {loading && <span className="text-xs text-white/50">(loading...)</span>}</h3>
           <p className="text-white/60 text-sm truncate">{track.artist}</p>
           <p className="text-white/40 text-xs truncate">{track.album}</p>
           <p className="text-white/40 text-xs">
@@ -189,6 +233,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
         </div>
         <span className="text-white/60 text-xs w-8">{Math.round(volume * 100)}%</span>
       </div>
+      <canvas ref={canvasRef} width="300" height="100" className="mt-4"></canvas>
     </div>
   );
 };

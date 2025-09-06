@@ -15,12 +15,13 @@ const MoodPlaylists: React.FC = () => {
     playTrack, 
     pause, 
     resume, 
-    playNotificationSound, 
     currentTime, 
     duration, 
-    volume, 
-    seek, 
-    setVolume 
+    volume,
+    seek,
+    setVolume,
+    loading,
+    analyser
   } = useAudio();
 
   const moods = [
@@ -80,7 +81,6 @@ const MoodPlaylists: React.FC = () => {
     setGeneratedTracks(tracks);
     
     setIsGenerating(false);
-    playNotificationSound();
   };
 
   const handlePlayTrack = async (track: any) => {
@@ -128,8 +128,7 @@ const MoodPlaylists: React.FC = () => {
     setCurrentTrack(generatedTracks[prevIndex]);
   };
 
-  const currentTime = new Date().getHours();
-  const suggestedMood = currentTime < 12 ? 'morning' : currentTime < 18 ? 'hype' : 'night';
+  const suggestedMood = new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'hype' : 'night';
 
   return (
     <div className="min-h-screen p-4 space-y-6">
@@ -257,6 +256,8 @@ const MoodPlaylists: React.FC = () => {
             currentTime={currentTime}
             duration={duration}
             volume={volume}
+            loading={loading}
+            analyser={analyser}
             onPlayPause={togglePlayback}
             onNext={nextTrack}
             onPrevious={previousTrack}
